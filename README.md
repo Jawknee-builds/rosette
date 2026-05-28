@@ -1,93 +1,152 @@
-# Rosette 🌸
+# 🌸 Rosette Mobile: AI-Powered Breast Health Companion
 
-**Empowering proactive breast health with intelligence and care.**
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![React Native](https://img.shields.io/badge/Frontend-React%20Native-blue.svg)](https://reactnative.dev)
+[![Expo](https://img.shields.io/badge/Framework-Expo%20Go-black.svg)](https://expo.dev)
+[![Firebase](https://img.shields.io/badge/Backend-Firebase-orange.svg)](https://firebase.google.com)
+[![Cloud Functions](https://img.shields.io/badge/Serverless-Cloud%20Functions-orange.svg)](https://firebase.google.com/docs/functions)
 
-Rosette is a modern, intuitive mobile application developed with React Native and Expo. It bridges the gap between clinical knowledge and daily wellness, providing users with the tools they need for regular self-monitoring, symptom tracking, and early detection—all within a secure and supportive environment.
+**Rosette** is a modern, privacy-first mobile application designed to empower proactive breast health through intelligence, structured wellness rituals, and serverless risk assessments. 
 
-## 🎗️ Why Rosette?
+By bridging the gap between clinical knowledge and everyday wellness, Rosette offers users a secure, supportive, and emotionally comforting environment for monthly self-examinations, symptom logging, and real-time risk classification.
 
-Breast health is too often reactive, with many individuals only seeking medical advice once symptoms are advanced. **Rosette** changes this narrative. Built for anyone proactive about their long-term health, it provides a structured yet gentle approach to monitoring changes, educating users on best practices, and offering immediate risk assessments. Our mission is to make breast health a seamless, stress-free part of your wellness routine.
+---
 
-## 🗺️ User Journey
+## 🎗️ The Core Philosophy & Impact
 
-1.  **Personalized Setup**: Secure onboarding using phone authentication to create your private health profile.
-2.  **Guided Discovery**: Learn the "how" and "why" of breast health through our interactive education modules.
-3.  **Monthly Ritual**: Follow step-by-step, visually guided self-examinations to establish your baseline.
-4.  **Instant Logging**: Quickly record any changes or symptoms the moment they occur.
-5.  **Smart Insights**: Receive automated risk assessments and clear guidance on the next steps for your clinical care.
+### The Problem
+Breast health is historically reactive. Due to anxiety, lack of structured guidance, or general discomfort, most individuals only consult a clinical expert once symptoms become advanced. 
 
-## ✨ Key Features
+### The Solution: Proactive Health Rituals
+Rosette shifts the paradigm from reactive fear to **gentle, proactive care**. It establishes:
+1. **Low-friction Onboarding:** Secure phone-only authentication (no password fatigue).
+2. **Visual Step-by-Step Guidance:** Interactive visual walkthroughs of proper monthly self-exams.
+3. **Structured Symptom Profiling:** Clear logging of anatomical variations (color-coded highlights).
+4. **Serverless Risk Insights:** Immediate risk estimation via real-time Firebase triggers.
 
-- **Proactive Symptom Tracking**: Log and categorize symptoms with a user-friendly interface to track changes over time.
-- **Guided Self-Examination**: Interactive, step-by-step instructions that remove the guesswork from monthly checks.
-- **Intelligent Risk Assessment**: Backend analysis powered by Firebase Cloud Functions to provide instant, data-driven feedback.
-- **Secure Phone Auth**: Privacy-first authentication ensures your health data remains yours.
-- **Modern, Accessible UI**: A calming, high-contrast design system optimized for ease of use and emotional comfort.
+---
 
-## 🖼️ Screenshots
+## 🖼️ Application Showcases
 
 | Onboarding Flow | Home Dashboard | Guided Self-Exam | Symptom Checker |
 | :---: | :---: | :---: | :---: |
-| ![Onboarding - Securely start your health journey](https://via.placeholder.com/200x400?text=Onboarding+Screen) | ![Dashboard - Your health at a glance](https://via.placeholder.com/200x400?text=Home+Screen) | ![Self-Exam - Step-by-step guidance](https://via.placeholder.com/200x400?text=Self-Exam+Screen) | ![Symptom Checker - Quick & easy logging](https://via.placeholder.com/200x400?text=Symptom+Checker) |
-| *Securely start your journey* | *Your health at a glance* | *Step-by-step guidance* | *Quick & easy logging* |
+| <img src="./assets/rosette_onboarding.png" width="200" alt="Secure Onboarding Screen"/> | <img src="./assets/rosette_dashboard.png" width="200" alt="Home Screen Baseline Dashboard"/> | <img src="./assets/rosette_exam.png" width="200" alt="Step-by-Step Guided Breast Exam"/> | <img src="./assets/rosette_symptom.png" width="200" alt="Anatomical Symptom Logger Screen"/> |
+| *Secure, calming onboarding* | *Dynamic status at a glance* | *Precision physical guidance* | *Interactive clinical checks* |
 
-## 🛠️ Tech Stack
+---
 
-- **Frontend Core**: React Native & Expo (Cross-platform excellence)
-- **Navigation**: React Navigation (Seamless transitions)
-- **Backend Services**: Firebase (Auth, Firestore, Cloud Functions)
-- **State & Data**: Real-time synchronization and secure cloud storage
-- **Design System**: Custom CSS-in-JS tokens for a premium, consistent look
+## 🏗️ Systems Architecture & Flow
 
-## 🚀 Getting Started
+Rosette is powered by a seamless serverless architecture combining **Expo (React Native)** with a real-time **Firebase backend**. The entire data propagation operates in real-time:
 
-Experience Rosette on your own device in minutes.
+### Real-Time Risk Assessment Flow
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as User Mobile App (Expo)
+    participant Auth as Firebase Auth
+    participant Db as Firestore Database
+    participant FCF as Firebase Cloud Functions (calculateRiskScore)
+    
+    User->>Auth: Request Phone OTP Authentication
+    Auth-->>User: Secure User Credentials & Session Token
+    User->>Db: Write Symptom Logs / Self-Exam Data
+    Db-->>FCF: Firestore Trigger: documents/symptoms/{symptomId}.onWrite()
+    activate FCF
+    Note over FCF: Analyze logged symptom counts & patient demographics
+    FCF->>Db: Set Recalculated Risk Level ('medium'/'low') & Timestamp
+    deactivate FCF
+    Db-->>User: Real-time listener updates UI instantly
+```
+
+### Serverless Reminder Scheduling
+```mermaid
+graph LR
+    A[Google Cloud Scheduler] -->|Every 24 Hours| B(Firebase Cloud Function: scheduleReminders)
+    B --> C{Scan users database}
+    C -->|Symptom check overdue| D[Dispatch Push Notification via FCM]
+    C -->|Baseline up to date| E[Do nothing]
+    style A fill:#ea4335,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#f4b400,stroke:#fff,stroke-width:2px,color:#fff
+    style D fill:#34a853,stroke:#fff,stroke-width:2px,color:#fff
+```
+
+---
+
+## 🛠️ Technical Stack & Frameworks
+
+- **Cross-Platform Frontend**: [React Native](https://reactnative.dev) & [Expo Go](https://expo.dev) – Single codebase running natively on iOS, Android, and Web.
+- **Serverless Backend**: [Firebase Cloud Functions](https://firebase.google.com/docs/functions) – Isolated, automatically scaled JavaScript microservices.
+- **Real-Time Storage**: [Firestore Database](https://firebase.google.com/docs/firestore) – Fully managed NoSQL document database.
+- **Identity Orchestration**: [Firebase Authentication](https://firebase.google.com/docs/auth) – Secure phone OTP verification.
+- **Elegant Navigation**: [React Navigation](https://reactnavigation.org) – Seamless transitions between Onboarding, Dashboard, Exam, and Checker stacks.
+- **Calming Design System**: Styled-system using responsive tokens tailored for high-accessibility, calming pastel tones, and modern typography.
+
+---
+
+## ⚡ Developer & Local Run Procedures
 
 ### Prerequisites
+- [Node.js](https://nodejs.org/) (v18 or later recommended)
+- [Expo Go App](https://expo.dev/expo-go) installed on your iOS/Android device.
 
-- [Node.js](https://nodejs.org/) (v16.x or later)
-- [Expo Go](https://expo.dev/expo-go) app installed on your iOS or Android device
+### 1. Installation
+Clone the repository and install all node packages:
+```bash
+git clone https://github.com/Jawknee-builds/rosette.git
+cd rosette
+npm install
+```
 
-### Installation & Launch
+### 2. Configuration & Secrets Handling
+Rosette utilizes Expo's built-in support for environment variables. Create a `.env` file in the root folder for custom Firebase connections:
+```env
+EXPO_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id
+```
+> [!NOTE]
+> If no variables are defined, the app gracefully falls back to secure mockup configurations (`"mock-api-key"`) so you can run the app locally without immediate cloud infrastructure setup!
 
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/Jawknee-builds/rosette.git
-    cd rosette
-    ```
+### 3. Launching the App
+Run the Expo development bundler:
+```bash
+npx expo start
+```
 
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
+### 4. Testing & Running on Device
+- **Physical Device**: Scan the generated **QR code** in the terminal using either the Camera app (iOS) or the Expo Go app (Android).
+- **iOS Simulator**: Press `i` to spin up the local iPhone simulator (requires Xcode).
+- **Android Emulator**: Press `a` to spin up your Android Studio emulator.
+- **Web Interface**: Press `w` to run a fully responsive web preview in your default browser.
 
-3.  **Start the engine**:
-    ```bash
-    npx expo start
-    ```
+---
 
-4.  **Scan and Go**: Use your camera or the Expo Go app to scan the QR code displayed in your terminal. For web preview, simply press `w`.
-
-## 📁 Project Structure
+## 📁 Repository Structure
 
 ```text
 rosette/
-├── assets/          # Brand assets, icons, and walkthrough imagery
-├── firebase/        # Security rules and intelligent Cloud Functions
+├── assets/          # Calming brand logos, app icons, and stunning UI mockups
+├── firebase/        # Security rules, database indexes, and Cloud Functions code
+│   └── functions/   # calculateRiskScore trigger and daily notification scheduler
 ├── src/
-│   ├── components/  # Atomic UI primitives and layout patterns
-│   ├── navigation/  # Routing logic and nav stacks
-│   ├── screens/     # Rich, feature-driven page views
-│   ├── services/    # API clients, Firebase config, and notifications
-│   └── theme/       # Centralized design system (colors, typography)
-├── App.js           # Main application entry point
-└── app.json         # Expo manifest and project configuration
+│   ├── components/  # Atomic UI primitives, customized input fields, and layouts
+│   ├── navigation/  # Routing hierarchies and interactive stack navigations
+│   ├── screens/     # Highly polished UI screens (Auth, Onboarding, Exam, Dashboard)
+│   ├── services/    # Client-side Firebase configs and push notification services
+│   └── theme/       # Design tokens (curated pastel colors, typographic sizes)
+├── App.js           # Root application entry point
+├── app.json         # Expo package metadata and manifest config
+└── vercel.json      # Client-side web hosting configurations
 ```
 
-## 🤝 Contributing
+---
 
-We believe in the power of community-driven health tools. If you’re a developer or designer passionate about health-tech, please feel free to fork this repo and submit a Pull Request.
+## 🛡️ Privacy & Compliance
+All user details, symptom records, and self-exam logs are strictly scoped using **Firebase Firestore Security Rules** to ensure that users can only read or write their own documents. No health records are shared with third parties.
 
-## 📄 License
-
-This project is currently private and intended for development and evaluation purposes. All rights reserved.
+---
+*Built with care & dedication by [Jawknee-builds](https://github.com/Jawknee-builds)*
