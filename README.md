@@ -5,6 +5,9 @@
 [![Expo](https://img.shields.io/badge/Framework-Expo%20Go-black.svg)](https://expo.dev)
 [![Firebase](https://img.shields.io/badge/Backend-Firebase-orange.svg)](https://firebase.google.com)
 [![Cloud Functions](https://img.shields.io/badge/Serverless-Cloud%20Functions-orange.svg)](https://firebase.google.com/docs/functions)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-black?logo=vercel)](https://rosette-liart.vercel.app)
+
+👉 **[Live Vercel Web Demo](https://rosette-liart.vercel.app)**
 
 **Rosette** is a modern, privacy-first mobile application designed to empower proactive breast health through intelligence, structured wellness rituals, and serverless risk assessments. 
 
