@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, SafeAreaView, ScrollView } from 'react-native';
 import { colors } from '../theme/colors';
 
 const EXAM_STEPS = [
@@ -61,22 +61,33 @@ export default function SelfExamScreen() {
         </ScrollView>
 
         <View style={styles.footer}>
-          <TouchableOpacity 
-            style={[styles.button, styles.backButton, currentStep === 0 && { opacity: 0 }]} 
+          <Pressable 
+            style={({ pressed, hovered }) => [
+              styles.button,
+              styles.backButton,
+              currentStep === 0 && { opacity: 0 },
+              (pressed || hovered) && { borderColor: colors.primaryDark }
+            ]} 
             onPress={handleBack}
             disabled={currentStep === 0}
           >
-            <Text style={styles.backButtonText}>Previous</Text>
-          </TouchableOpacity>
+            {({ pressed, hovered }) => (
+              <Text style={[styles.backButtonText, (pressed || hovered) && { color: colors.primaryDark }]}>Previous</Text>
+            )}
+          </Pressable>
           
-          <TouchableOpacity 
-            style={[styles.button, styles.nextButton]} 
+          <Pressable 
+            style={({ pressed, hovered }) => [
+              styles.button,
+              styles.nextButton,
+              (pressed || hovered) && { backgroundColor: colors.primaryDark }
+            ]} 
             onPress={handleNext}
           >
             <Text style={styles.nextButtonText}>
               {currentStep === EXAM_STEPS.length - 1 ? "Finish Check" : "Next Step"}
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>

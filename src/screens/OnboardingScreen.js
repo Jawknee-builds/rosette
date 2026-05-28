@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, SafeAreaView, Switch } from 'react-native';
+import { View, Text, TextInput, Pressable, StyleSheet, ScrollView, SafeAreaView, Switch } from 'react-native';
 import { colors } from '../theme/colors';
 
 export default function OnboardingScreen({ route }) {
@@ -86,16 +86,28 @@ export default function OnboardingScreen({ route }) {
 
         <View style={styles.footer}>
           {step > 1 && (
-            <TouchableOpacity style={styles.backButton} onPress={() => setStep(step - 1)}>
-              <Text style={styles.backButtonText}>Back</Text>
-            </TouchableOpacity>
+            <Pressable 
+              style={({ pressed, hovered }) => [
+                styles.backButton,
+                (pressed || hovered) && { borderColor: colors.primaryDark }
+              ]} 
+              onPress={() => setStep(step - 1)}
+            >
+              {({ pressed, hovered }) => (
+                <Text style={[styles.backButtonText, (pressed || hovered) && { color: colors.primaryDark }]}>Back</Text>
+              )}
+            </Pressable>
           )}
-          <TouchableOpacity 
-            style={[styles.nextButton, step === 1 && { flex: 1 }]} 
+          <Pressable 
+            style={({ pressed, hovered }) => [
+              styles.nextButton,
+              step === 1 && { flex: 1 },
+              (pressed || hovered) && { backgroundColor: colors.primaryDark }
+            ]} 
             onPress={handleNext}
           >
             <Text style={styles.nextButtonText}>{step === 3 ? "Complete" : "Continue"}</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../theme/colors';
 
@@ -20,12 +20,15 @@ export default function HomeScreen() {
           <Text style={styles.cardHeader}>Next Reminder</Text>
           <Text style={styles.cardTitle}>Self-Exam due in 3 days</Text>
           <Text style={styles.cardText}>Regular checks are your best defense.</Text>
-          <TouchableOpacity 
-            style={styles.primaryButton}
+          <Pressable 
+            style={({ pressed, hovered }) => [
+              styles.primaryButton,
+              (pressed || hovered) && { backgroundColor: colors.primaryDark }
+            ]}
             onPress={() => navigation.navigate('Self Exam')}
           >
             <Text style={styles.primaryButtonText}>Start Check Now</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         <View style={[styles.card, styles.tipCard]}>
@@ -36,12 +39,17 @@ export default function HomeScreen() {
         </View>
         
         <View style={styles.actionRow}>
-          <TouchableOpacity 
-            style={styles.secondaryButton}
+          <Pressable 
+            style={({ pressed, hovered }) => [
+              styles.secondaryButton,
+              (pressed || hovered) && { borderColor: colors.primaryDark }
+            ]}
             onPress={() => navigation.navigate('Symptoms')}
           >
-            <Text style={styles.secondaryButtonText}>Log Symptoms</Text>
-          </TouchableOpacity>
+            {({ pressed, hovered }) => (
+              <Text style={[styles.secondaryButtonText, (pressed || hovered) && { color: colors.primaryDark }]}>Log Symptoms</Text>
+            )}
+          </Pressable>
         </View>
 
         <Text style={styles.disclaimer}>

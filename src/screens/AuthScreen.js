@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
 import { colors } from '../theme/colors';
 
 export default function AuthScreen({ route }) {
@@ -44,9 +44,15 @@ export default function AuthScreen({ route }) {
                 value={phoneNumber}
                 onChangeText={setPhoneNumber}
               />
-              <TouchableOpacity style={styles.button} onPress={handleSendCode}>
+              <Pressable 
+                style={({ pressed, hovered }) => [
+                  styles.button,
+                  (pressed || hovered) && { backgroundColor: colors.primaryDark }
+                ]} 
+                onPress={handleSendCode}
+              >
                 <Text style={styles.buttonText}>Continue</Text>
-              </TouchableOpacity>
+              </Pressable>
             </>
           ) : (
             <>
@@ -60,12 +66,25 @@ export default function AuthScreen({ route }) {
                 value={verificationCode}
                 onChangeText={setVerificationCode}
               />
-              <TouchableOpacity style={styles.button} onPress={handleVerifyCode}>
+              <Pressable 
+                style={({ pressed, hovered }) => [
+                  styles.button,
+                  (pressed || hovered) && { backgroundColor: colors.primaryDark }
+                ]} 
+                onPress={handleVerifyCode}
+              >
                 <Text style={styles.buttonText}>Verify & Log In</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.textButton} onPress={() => setCodeSent(false)}>
-                <Text style={styles.textButtonText}>Change Phone Number</Text>
-              </TouchableOpacity>
+              </Pressable>
+              <Pressable 
+                style={styles.textButton} 
+                onPress={() => setCodeSent(false)}
+              >
+                {({ pressed, hovered }) => (
+                  <Text style={[styles.textButtonText, (pressed || hovered) && { color: colors.primaryDark }]}>
+                    Change Phone Number
+                  </Text>
+                )}
+              </Pressable>
             </>
           )}
         </View>

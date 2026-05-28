@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, SafeAreaView, Alert } from 'react-native';
 import { colors } from '../theme/colors';
 
 const SYMPTOM_OPTIONS = [
@@ -50,15 +50,22 @@ export default function SymptomCheckerScreen() {
           {SYMPTOM_OPTIONS.map((symp, index) => {
             const isSelected = selectedSymptoms.includes(symp);
             return (
-              <TouchableOpacity 
+              <Pressable 
                 key={index} 
-                style={[styles.optionButton, isSelected && styles.optionButtonActive]}
+                style={({ pressed, hovered }) => [
+                  styles.optionButton,
+                  isSelected && styles.optionButtonActive,
+                  (pressed || hovered) && {
+                    backgroundColor: isSelected ? colors.primaryDark + '25' : colors.primary + '15',
+                    borderColor: isSelected ? colors.primaryDark : colors.primary
+                  }
+                ]}
                 onPress={() => toggleSymptom(symp)}
               >
-                <Text style={[styles.optionText, isSelected && styles.optionTextActive]}>
+                <Text style={[styles.optionText, isSelected && styles.optionTextActive, isSelected && { color: colors.primaryDark }]}>
                   {symp}
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             );
           })}
         </View>
@@ -74,9 +81,15 @@ export default function SymptomCheckerScreen() {
           onChangeText={setNotes}
         />
 
-        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <Pressable 
+          style={({ pressed, hovered }) => [
+            styles.submitButton,
+            (pressed || hovered) && { backgroundColor: colors.primaryDark }
+          ]} 
+          onPress={handleSubmit}
+        >
           <Text style={styles.submitButtonText}>Log to History</Text>
-        </TouchableOpacity>
+        </Pressable>
 
         <View style={styles.warningBox}>
           <Text style={styles.warningText}>
